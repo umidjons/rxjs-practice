@@ -1,0 +1,17 @@
+{
+  "name": "rxjs-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc --watch & node_modules/.bin/nodemon dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rxjs": "^5.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
