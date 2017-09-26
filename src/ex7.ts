@@ -14,4 +14,4 @@ const spendings = [
 Observable.from(spendings)
     .pluck('amount')
     .reduce(add, 0)
-    .subscribe(console.log);
+    .subscribe(console.log); // Output: 725
