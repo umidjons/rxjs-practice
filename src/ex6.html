@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RxJS Filter example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.4.3/Rx.min.js"></script>
+</head>
+
+<body>
+    <input type="text" id="input">
+
+    <script>
+        const isNumericalKeyCode = code => code >= 48 && code <= 57;
+        const input = document.querySelector('#input');
+        Rx.Observable.fromEvent(input, 'keyup')
+            .pluck('keyCode')
+            .filter(isNumericalKeyCode)
+            .subscribe(code => {
+                // Log only numeric characters
+                console.log(`User typed: ${String.fromCharCode(code)}`);
+            });
+    </script>
+</body>
+
+</html>
