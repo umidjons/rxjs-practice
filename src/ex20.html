@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RxJS Filter example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.4.3/Rx.min.js"></script>
+</head>
+
+<body>
+<h1>bufferWhen() example</h1>
+
+<p>
+  Click "Generate a number" button several times.
+  Then click "Release" button and look at the console for the results.
+</p>
+
+<button class="btn-start">Generate a number</button>
+<button class="btn-release">Release</button>
+
+<script>
+    const btnStart = document.querySelector('.btn-start');
+    const btnRelease = document.querySelector('.btn-release');
+
+    const release$ = Rx.Observable.fromEvent(btnRelease, 'click');
+
+    Rx.Observable.fromEvent(btnStart, 'click')
+        .map(_ => Math.floor(Math.random() * 100))
+        .bufferWhen(() => release$)
+        .subscribe(random => console.log(random));
+</script>
+</body>
+
+</html>

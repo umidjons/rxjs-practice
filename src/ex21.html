@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RxJS Filter example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.4.3/Rx.min.js"></script>
+</head>
+
+<body>
+
+<h1>bufferToggle() example</h1>
+
+<p>
+Click "Start", then click "Click Me" button several times.
+Then click "Stop" and look at the results on the console.
+</p>
+
+<button class="btn">Click Me</button>
+
+<button class="btn-start">Start</button>
+<button class="btn-stop">Stop</button>
+
+<script>
+const btn = document.querySelector('.btn');
+const btnStart = document.querySelector('.btn-start');
+const btnStop = document.querySelector('.btn-stop');
+
+const start$ = Rx.Observable.fromEvent(btnStart, 'click')
+  .do(() => console.log('Start buffering...'));
+
+const stop$ = Rx.Observable.fromEvent(btnStop, 'click')
+  .do(() => console.log('Stop buffering.'));
+
+Rx.Observable.fromEvent(btn, 'click')
+  .map(_ => Math.floor(Math.random() * 100))
+  .bufferToggle(start$, () => stop$)
+  .subscribe(random => console.log(random));
+</script>
+</body>
+
+</html>
