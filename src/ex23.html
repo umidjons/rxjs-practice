@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RxJS Filter example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.4.3/Rx.min.js"></script>
+</head>
+
+<body>
+
+<h1>merge() example</h1>
+
+<p>
+Make 'mouseup' or 'touch' events.
+Then look at console for results.
+</p>
+
+<script>
+const mouseup$ = Rx.Observable.fromEvent(document, 'mouseup');
+const touchend$ = Rx.Observable.fromEvent(document, 'touchend');
+
+Rx.Observable.merge(mouseup$, touchend$)
+  .do(event => console.log(event.type))
+  .map(event => {
+    switch(event.type) {
+      case 'touchend':
+        return {x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY};
+      case 'mouseup':
+        return {x: event.clientX, y: event.clientY};
+    }
+  })
+  .subscribe(result => console.log(`x: ${result.x} y: ${result.y}`));
+</script>
+</body>
+
+</html>
