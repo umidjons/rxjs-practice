@@ -22,16 +22,11 @@ Then look at console for results.
 const mouseup$ = Rx.Observable.fromEvent(document, 'mouseup');
 const touchend$ = Rx.Observable.fromEvent(document, 'touchend');
 
-Rx.Observable.merge(mouseup$, touchend$)
-  .do(event => console.log(event.type))
-  .map(event => {
-    switch(event.type) {
-      case 'touchend':
-        return {x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY};
-      case 'mouseup':
-        return {x: event.clientX, y: event.clientY};
-    }
-  })
+// Normalizing upstream data before merging
+const conformantMouseUp$ = mouseup$.map(event => ({x: event.clientX, y: event.clientY}));
+const conformantTouchEnd$ = touchend$.map(event => ({x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY}));
+
+Rx.Observable.merge(conformantMouseUp$, conformantTouchEnd$)
   .subscribe(result => console.log(`x: ${result.x} y: ${result.y}`));
 </script>
 </body>
